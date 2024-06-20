@@ -1,11 +1,14 @@
 import pandas as pd
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
-box_info = pd.read_csv("./repo/OpenSenseMap-Projekt/daten/box_info/box_info.csv")
+current_directory = Path(__file__).resolve().parent
+
+box_info = pd.read_csv(current_directory.parent / "daten" / "box_info" / "box_info.csv")
 
 # Getting the dates for past week
-end_date = datetime.utcnow()
+end_date = datetime.now()
 start_date = end_date - timedelta(days=7)
 
 end_date_str = end_date.isoformat() + 'Z'
@@ -32,5 +35,5 @@ past_week_temperature = past_week_temperature.set_index("createdAt")
 past_week_temperature = past_week_temperature.resample('h').mean()
 past_week_temperature["value"] = past_week_temperature["value"].round(1)
 
-past_week_temperature.to_csv(f"./repo/OpenSenseMap-Projekt/daten/past_week/past_week_{file_ending_today}.csv")
+past_week_temperature.to_csv(current_directory.parent / "daten" / "past_week" / f"past_week_{file_ending_today}.csv")
 

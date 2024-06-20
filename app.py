@@ -6,19 +6,27 @@ from datetime import datetime, timedelta
 import os
 import requests
 from plotly import graph_objects as go
+from pathlib import Path
+
 
 
 #TODO Vereinheitlichen der Plot Layouts!
 #TODO Modell bauen, an großer Historie trainieren und anhand der letzten Woche an Daten die nächsten Tage vorhersagen
 #TODO Prüfen der Pfade, Windows is blöd
+#TODO Ausführungsreihenfolge einbauen, damit dataframe skripte ausgeführt werden
 
 # date now
 date_now = datetime.now().date()
+date_now = "2024-06-20" #TODO REMOVE THIS WHEN DONE PROTOTYPING
 
-# Get the directory of the current script
-current_directory = os.path.dirname(__file__)
-past_week_data = pd.read_csv(fr"{current_directory}\daten\past_week\past_week_{date_now}.csv")
-box_data = pd.read_csv(fr"{current_directory}\daten\box_info\box_info.csv")
+# File paths
+current_directory = Path(__file__).resolve().parent
+
+file_path = current_directory / 'daten' / 'past_week' / f'past_week_{date_now}.csv'
+past_week_data = pd.read_csv(file_path)
+
+file_path = current_directory / 'daten' / 'box_info' / 'box_info.csv'
+box_data = pd.read_csv(file_path)
 
 # Plotly configuration
 layout = {
@@ -28,6 +36,7 @@ layout = {
     "width": 1000,
     "height": 250
 }
+
 
 # Application
 app = Dash(__name__)
@@ -41,7 +50,7 @@ app.layout = [
             html.Iframe(
                 id='html_file',
                 style={'width': '33%', 'height':'800px',"border":"5px solid #ccc"},
-                srcDoc=open('repo/OpenSenseMap-Projekt/graphs-static/location/map.html', 'r').read()
+                srcDoc=open(current_directory / "graphs_static" / "location" / "map.html", 'r').read()
             )
         ])
     ]),

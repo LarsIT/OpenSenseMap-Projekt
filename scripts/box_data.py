@@ -10,11 +10,15 @@ from datetime import datetime, timedelta
 import requests
 import folium
 import kaleido
+from pathlib import Path
 
 pio.templates.default = "plotly_white" 
 
+current_directory = Path(__file__).resolve().parent
+
 # Box we want to investigate
 box_id = "63cbcc462b62690008f2fe1e"
+
 
 # Data request for box information
 url = f'https://api.opensensemap.org/boxes/{box_id}?format=json'
@@ -35,7 +39,7 @@ box_data = [[response["_id"], response["name"], response["currentLocation"]["coo
 columns = ["ID", "Name", "Coordinates", "Temperature_sensor_id"]
 
 box_info = pd.DataFrame(box_data, columns=columns)
-box_info.to_csv("./repo/OpenSenseMap-Projekt/daten/box_info/box_info.csv")
+box_info.to_csv(current_directory.parent / "daten" / "box_info" / "box_info.csv")
 
 lat = box_info["Coordinates"][0][1]
 lon = box_info["Coordinates"][0][0]
@@ -47,5 +51,5 @@ folium.Marker(
     tooltip=box_info.at[0, 'Name']
 ).add_to(map_)
 
-map_.save("./repo/OpenSenseMap-Projekt/graphs-static/location/map.html")
+map_.save(current_directory.parent / "graphs_static" / "location" / "map.html")
 
