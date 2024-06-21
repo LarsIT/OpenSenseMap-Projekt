@@ -3,7 +3,6 @@ import pandas as pd
 from dash.dependencies import Input, Output
 import plotly.express as px
 from datetime import datetime, timedelta
-import os
 import requests
 from plotly import graph_objects as go
 from pathlib import Path
@@ -91,7 +90,7 @@ app = Dash(__name__)
 
 app.layout = [
     html.Div([
-        html.H1("Max Elden Ring Death-Counter: 33")
+        html.H1("Max Elden Ring Death-Counter während ich am Projekt arbeite: 39")
     ]),
     
     # Location
