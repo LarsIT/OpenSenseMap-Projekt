@@ -28,11 +28,11 @@ date_now = datetime.now().date()
 
 # Paths
 current_directory = Path(__file__).resolve().parent
-
+venv_path = current_directory / ".venv" / "scripts" / "python.exe"
 # Scripts
-subprocess.run(["python", current_directory / "scripts" / "box_data.py"])
-subprocess.run(["python", current_directory / "scripts" / "history.py"])
-subprocess.run(["python", current_directory / "scripts" / "model.py"])
+subprocess.run([venv_path, current_directory / "scripts" / "box_data.py"])
+subprocess.run([venv_path, current_directory / "scripts" / "history.py"])
+subprocess.run([venv_path, current_directory / "scripts" / "model.py"])
 
 # Data and model
 past_week_data = pd.read_csv(current_directory / 'daten' / 'past_week' / f'past_week_{date_now}.csv')
@@ -64,7 +64,6 @@ forecast_df.rename({"value":"predict"}, axis=1, inplace=True)
 # Iteratively building the future 72h forecast
 # Since we use features that would require to know for example for predicting t+25 the value of our prediction of t+1 (t+25-24)
 # We have to use this for-loop to build it sequentially
-
 current_index = len(forecast_df) - forecast_horizon
 
 for timestep in range(1, forecast_horizon+1):

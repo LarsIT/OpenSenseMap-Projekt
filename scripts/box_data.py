@@ -1,17 +1,7 @@
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-import seaborn as sns
-import matplotlib.pyplot as plt 
-import numpy as np
-import plotly.io as pio
-from datetime import datetime, timedelta
 import requests
 import folium
-import kaleido
 from pathlib import Path
-
-pio.templates.default = "plotly_white" 
 
 current_directory = Path(__file__).resolve().parent
 
