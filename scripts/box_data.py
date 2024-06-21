@@ -5,7 +5,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 import numpy as np
 import plotly.io as pio
-from prophet import Prophet
 from datetime import datetime, timedelta
 import requests
 import folium

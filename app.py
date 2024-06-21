@@ -9,6 +9,7 @@ from plotly import graph_objects as go
 from pathlib import Path
 import joblib
 import numpy as np
+import subprocess
 
 
 def make_features(df):
@@ -22,17 +23,18 @@ def make_features(df):
     
     return df
 
-#TODO Vereinheitlichen der Plot Layouts!
-#TODO Modell bauen, an großer Historie trainieren und anhand der letzten Woche an Daten die nächsten Tage vorhersagen
-#TODO Ausführungsreihenfolge einbauen, damit dataframe skripte ausgeführt werden
-
 # date now
 date_now = datetime.now().date()
-date_now = "2024-06-20" #TODO REMOVE THIS WHEN DONE PROTOTYPING
 
-# Data and Model imports
+# Paths
 current_directory = Path(__file__).resolve().parent
 
+# Scripts
+subprocess.run(["python", current_directory / "scripts" / "box_data.py"])
+subprocess.run(["python", current_directory / "scripts" / "history.py"])
+subprocess.run(["python", current_directory / "scripts" / "model.py"])
+
+# Data and model
 past_week_data = pd.read_csv(current_directory / 'daten' / 'past_week' / f'past_week_{date_now}.csv')
 box_data = pd.read_csv(current_directory / 'daten' / 'box_info' / 'box_info.csv')
 model = joblib.load(current_directory / "model" / "model.joblib")
@@ -115,7 +117,7 @@ app.layout = [
     html.Div([
         html.Div(children="Vorhersage"),
         dcc.Graph(
-            figure=px.line(forecast_df, x="index", y="predict").update_layout(layout))
+            figure=px.line(forecast_df[-72:], x="index", y="predict").update_layout(layout))
     ]),
 
     # Live
