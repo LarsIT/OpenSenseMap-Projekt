@@ -12,7 +12,6 @@ from pathlib import Path
 
 #TODO Vereinheitlichen der Plot Layouts!
 #TODO Modell bauen, an großer Historie trainieren und anhand der letzten Woche an Daten die nächsten Tage vorhersagen
-#TODO Prüfen der Pfade, Windows is blöd
 #TODO Ausführungsreihenfolge einbauen, damit dataframe skripte ausgeführt werden
 
 # date now
@@ -42,7 +41,10 @@ layout = {
 app = Dash(__name__)
 
 app.layout = [
-
+    html.Div([
+        html.H1("Max Elden Ring Death-Counter: 19")
+    ]),
+    
     # Location
     html.Div([
         html.H1("Standort der OpenSenseBox"),
