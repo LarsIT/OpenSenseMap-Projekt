@@ -9,6 +9,10 @@ from pathlib import Path
 import joblib
 import numpy as np
 import subprocess
+import plotly.io as pio
+
+pio.templates.default = "simple_white"
+line_color = '#262626'
 
 
 def make_features(df):
@@ -39,10 +43,10 @@ box_data = pd.read_csv(current_directory / 'daten' / 'box_info' / 'box_info.csv'
 model = joblib.load(current_directory / "model" / "model.joblib")
 
 # Plotly configuration
-layout = {
-    "width": 1000,
-    "height": 250
-}
+# layout = {
+#     "width": "90%",
+#     "height": 250
+# }
 
 # Forecast
 past_week_temperature = past_week_data
@@ -84,53 +88,93 @@ for timestep in range(1, forecast_horizon+1):
 
 forecast_df.reset_index(inplace=True)
 ##
+axis_labels={
+    "yaxis_title" : "Temperatur in °C",
+    "xaxis_title" : "Datum"
+}
 
 # Application
 app = Dash(__name__)
 
-app.layout = [
-    html.Div([
-        html.H1("Max Elden Ring Death-Counter während ich am Projekt arbeite: 39")
-    ]),
+app.layout = html.Div(
+    children=[
+        html.Div(
+            className="banner",
+            children=[
+                html.H1("Dashboard zur Temperatur in Köln"),
+                html.Img(src="/assets/img/Wappen_Koeln.png", className="banner-img")
+            ]
+        ),
+        html.Div(
+            className="grid-container",
+            children=[
+                html.Div(
+                    className="grid-item",
+                    children=[
+                        html.Iframe(id='html_file', style={'width': '100%', 'height': '100%', "border": "5px solid #ccc"}, srcDoc=open(current_directory / "graphs_static" / "location" / "map.html", 'r').read())
+                    ]
+                ),
+                html.Div(
+                    className="grid-item graph-container",
+                    children=[
+                        html.Div(
+                            children=[
+                                dcc.Graph(
+                                    className="graph-item",
+                                    figure=px.line(past_week_data, x="createdAt", y="value", color_discrete_sequence=[line_color]).update_layout(axis_labels))
+                            ]
+                        ),
+                        html.Div(
+                            children=[
+                                dcc.Graph(
+                                    className="graph-item",
+                                    figure=px.line(forecast_df[-72:], x="index", y="predict", color_discrete_sequence=[line_color]).update_layout(axis_labels))
+                            ]
+                        ),
+                        html.Div(
+                            children=[
+                                dcc.Graph(
+                                    className="graph-item",
+                                    id='live-graph'),
+                                dcc.Interval(id='interval-component', interval=10_000, n_intervals=0)
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+)
+
     
-    # Location
-    html.Div([
-        html.H1("Standort der OpenSenseBox"),
-        html.Div([
-            html.Iframe(
-                id='html_file',
-                style={'width': '33%', 'height':'800px',"border":"5px solid #ccc"},
-                srcDoc=open(current_directory / "graphs_static" / "location" / "map.html", 'r').read()
-            )
-        ])
-    ]),
 
-    # History
-    html.Div([
-        html.Div(children='Historie'),
-        dcc.Graph(figure=px.line(past_week_data, x="createdAt", y="value").update_layout(layout))
-    ]),
     
-    # Forecast
-    html.Div([
-        html.Div(children="Vorhersage"),
-        dcc.Graph(
-            figure=px.line(forecast_df[-72:], x="index", y="predict").update_layout(layout))
-    ]),
+#     # Location
+# ,
 
-    # Live
-    html.Div([
-        html.Div(children="Live Daten"),
-            # Graph component
-            dcc.Graph(id='live-graph'),
+#     # History
+#     html.Div([
+#         html.Div(children='Historie'),
+#         dcc.Graph(figure=px.line(past_week_data, x="createdAt", y="value").update_layout(layout))
+#     ]),
+    
+#     # Forecast
+#     html.Div([
+#         html.Div(children="Vorhersage"),
+#         dcc.Graph(figure=px.line(forecast_df[-72:], x="index", y="predict").update_layout(layout))
+#     ]),
 
-            # Triggers periodically
-            dcc.Interval(   
-            id='interval-component',
-            interval=10_000,
-            n_intervals=0)
-    ])
-]
+#     # Live
+#     html.Div([
+#         html.Div(children="Live Daten"),
+#             # Graph component
+#             dcc.Graph(id='live-graph'),
+
+#             # Triggers periodically
+#             dcc.Interval(id='interval-component',interval=10_000,n_intervals=0)
+#     ])
+# )
+
 
 # Initialize empty dataframe
 live_data = pd.DataFrame(columns=['timestamp', 'value'])
@@ -154,8 +198,8 @@ def update_graph(n):  # increment from intervals
     live_data = pd.concat([live_data, pd.DataFrame([{'timestamp': timestamp, 'value': float(value)}])], ignore_index=True)
 
     # Plot data
-    trace = go.Scatter(x=live_data['timestamp'], y=live_data['value'], mode='lines+markers')
-    layout = go.Layout(title='Live Sensordaten aus Köln', xaxis=dict(title='Zeitstempel'), yaxis=dict(title='Temperatur in Grad Celsius'), width=1000, height=250)
+    trace = go.Scatter(x=live_data['timestamp'], y=live_data['value'], mode='lines+markers', line_color=line_color)
+    layout = go.Layout(title='Live Sensordaten aus Köln', xaxis=dict(title='Zeitstempel'), yaxis=dict(title='Temperatur in °C'))
     fig = go.Figure(data=[trace], layout=layout)
     return fig
 

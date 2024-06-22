@@ -37,6 +37,7 @@ map_ = folium.Map(location=[lat, lon], zoom_start=15)
 folium.Marker(
     location=[lat, lon],
     popup=f"{box_info.at[0, 'Name']} (ID: {box_info.at[0, 'ID']})",
+    icon=folium.Icon(color="red"),
     tooltip=box_info.at[0, 'Name']
 ).add_to(map_)
 
