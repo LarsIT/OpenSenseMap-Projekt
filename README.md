@@ -60,3 +60,7 @@ Der folgende Graph zeigt einen wichtigen Schritt im Modelltraining, das Vorhersa
 Dieser Graph zeigt, dass im Großen und Ganzen das Modell ziemlich fähig scheint immer wieder auftretende Muster zu erkennen und gute Vorhersagen zu treffen. Jedoch kann man auch sehen, dass das Modell mit kurzfristigen Musteränderungen, wie etwa der Temperaturverlauf vom 30. Januar bis 1 Februar, zu kämpfen hat und stark von den eigentlichen Temperaturen abweicht.
 
 Das mittlere Fehlerquadrat liegt bei ungefähr 8.6 und die Wurzel davon bei ungefähr 2,9. Das deutet darauf hin, dass das Model im Durchschnitt um etwa 3 °C daneben liegt.
+
+### Wie geht es weiter?
+
+In weiterführenden Schritten könnte man das simple lineare Modell mit einem anspruchvolleren Modell für Zeitreihen ersetzen, ich denke da an SARIMAX. Das wäre für diesen Anwendungsfall sehr passend, da es auf Zeitreihenvorhersagen zugeschnitten ist die eine gewisse Saisonalität aufweisen und es exogene Variablen erlaubt, wodurch auch komplexere Zusammenhänge, die Einfluss auf die Temperatur haben könnten, abgebildet werden können.
