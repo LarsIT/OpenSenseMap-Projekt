@@ -101,7 +101,7 @@ app.layout = html.Div(
         html.Div(
             className="banner",
             children=[
-                html.H1("Dashboard zur Temperatur in Köln"),
+                html.H1("Temperaturanzeige Köln"),
                 html.Img(src="/assets/img/Wappen_Koeln.png", className="banner-img")
             ]
         ),
@@ -145,36 +145,6 @@ app.layout = html.Div(
         )
     ]
 )
-
-    
-
-    
-#     # Location
-# ,
-
-#     # History
-#     html.Div([
-#         html.Div(children='Historie'),
-#         dcc.Graph(figure=px.line(past_week_data, x="createdAt", y="value").update_layout(layout))
-#     ]),
-    
-#     # Forecast
-#     html.Div([
-#         html.Div(children="Vorhersage"),
-#         dcc.Graph(figure=px.line(forecast_df[-72:], x="index", y="predict").update_layout(layout))
-#     ]),
-
-#     # Live
-#     html.Div([
-#         html.Div(children="Live Daten"),
-#             # Graph component
-#             dcc.Graph(id='live-graph'),
-
-#             # Triggers periodically
-#             dcc.Interval(id='interval-component',interval=10_000,n_intervals=0)
-#     ])
-# )
-
 
 # Initialize empty dataframe
 live_data = pd.DataFrame(columns=['timestamp', 'value'])

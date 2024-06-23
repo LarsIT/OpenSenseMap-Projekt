@@ -3,15 +3,12 @@
 Gruppenmitglieder:
 
 - Lars Baumann, 84943
-- Julian Schneider, MatrNr
 
 ## Einleitung
 
 Im Rahmen des Umweltmonitoring Projektes war es die Aufgabenstellung lauffähiges Live-Dashboard, zum Monitoring einer (oder mehrerer) senseBox(en) und zur Vorhersage ausgewählter gemessener Variablen, aufzustellen.
 
 Das Dashboard in unserem Fall soll den Nutzern anzeigen wo die senseBox ist, wie die Temperaturen in der nahen Vergangenheit aussehen, was unser Modell an Werten für die nahe Zukunft vorhersagt und wie die Temperaturen aktuell assehen.
-
-blabla Julian hat nix gemacht
 
 ## Umsetzung
 
