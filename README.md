@@ -10,6 +10,10 @@ Im Rahmen des Umweltmonitoring Projektes war es die Aufgabenstellung lauffähige
 
 Das Dashboard in unserem Fall soll den Nutzern anzeigen wo die senseBox ist, wie die Temperaturen in der nahen Vergangenheit aussehen, was unser Modell an Werten für die nahe Zukunft vorhersagt und wie die Temperaturen aktuell assehen.
 
+Das Projekt wurde ursprüngliche als zweier-Gruppe gestartet, aber nach fehlender Rückmeldung meines Gruppenmitglieds habe ich das Projekt alleine weitergeführt.
+
+![Dashboard Screenshot](assets/img/activity_github.png)
+
 ## Umsetzung
 
 ### Dashboard Layout

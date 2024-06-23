@@ -11,6 +11,7 @@ import numpy as np
 import subprocess
 import plotly.io as pio
 
+# Plotly styling
 pio.templates.default = "simple_white"
 line_color = '#262626'
 
@@ -32,6 +33,7 @@ date_now = datetime.now().date()
 # Paths
 current_directory = Path(__file__).resolve().parent
 venv_path = current_directory / ".venv" / "scripts" / "python.exe"
+
 # Scripts
 subprocess.run([venv_path, current_directory / "scripts" / "box_data.py"])
 subprocess.run([venv_path, current_directory / "scripts" / "history.py"])
@@ -41,12 +43,6 @@ subprocess.run([venv_path, current_directory / "scripts" / "model.py"])
 past_week_data = pd.read_csv(current_directory / 'daten' / 'past_week' / f'past_week_{date_now}.csv')
 box_data = pd.read_csv(current_directory / 'daten' / 'box_info' / 'box_info.csv')
 model = joblib.load(current_directory / "model" / "model.joblib")
-
-# Plotly configuration
-# layout = {
-#     "width": "90%",
-#     "height": 250
-# }
 
 # Forecast
 past_week_temperature = past_week_data
@@ -87,7 +83,8 @@ for timestep in range(1, forecast_horizon+1):
     current_index += 1
 
 forecast_df.reset_index(inplace=True)
-##
+
+# Axis label tags
 axis_labels={
     "yaxis_title" : "Temperatur in °C",
     "xaxis_title" : "Datum"
