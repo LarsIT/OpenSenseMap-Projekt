@@ -121,14 +121,14 @@ app.layout = html.Div(
                             children=[
                                 dcc.Graph(
                                     className="graph-item",
-                                    figure=px.line(past_week_data, x="createdAt", y="value", color_discrete_sequence=[line_color]).update_layout(axis_labels))
+                                    figure=px.line(past_week_data, x="createdAt", y="value", color_discrete_sequence=[line_color], title="Temperatur der letzten Woche").update_layout(axis_labels))
                             ]
                         ),
                         html.Div(
                             children=[
                                 dcc.Graph(
                                     className="graph-item",
-                                    figure=px.line(forecast_df[-72:], x="index", y="predict", color_discrete_sequence=[line_color]).update_layout(axis_labels))
+                                    figure=px.line(forecast_df[-72:], x="index", y="predict", color_discrete_sequence=[line_color], title="Temperaturvorhersage für die nächsten 3 Tage").update_layout(axis_labels))
                             ]
                         ),
                         html.Div(
